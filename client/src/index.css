@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500&family=Poppins&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.AccountInput{
+  @apply p-3 ml-3  
+}
+
+.buttonStyle{
+  @apply  p-3 bg-green-blue text-center rounded-2xl block text-white
+}
