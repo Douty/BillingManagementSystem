@@ -58,7 +58,7 @@ Enter into the server folder then write in the terminal the following command
 
 Now enter into the client folder and write the following command.
 
-`cd server`<br>
+`cd client`<br>
 `npm run dev`<br>
 
 
