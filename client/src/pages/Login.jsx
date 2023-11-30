@@ -89,7 +89,7 @@ const Login = () => {
             </div>
             <div className="flex flex-col justify-center gap-2">
               <button className="buttonStyle " onClick={handleSubmit}>Customer Login</button>
-              <button className="buttonStyle">Employee Login</button>
+              <button className="buttonStyle" onClick={()=>{navigate("/adminportal")}}>Employee Login</button>
             </div>
               
             </div>
