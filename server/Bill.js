@@ -54,11 +54,14 @@ class Bill {
     const updatedPaymentStatus = { $set: { isPaid: status } };
     billCol.findOneAndUpdate(userQuery, updatedPaymentStatus);
   }
-  static async Pay(id, bill) {
+  static async Pay(id, bill, paymentDate) {
     const userQuery = { customerID: new ObjectId(id) };
     const billDoc = await billCol.findOne(userQuery);
 
     recordCol.insertOne(billDoc);
+    recordCol.updateOne(userQuery, {
+      $set: { DateOfPayment: new Date(paymentDate) },
+    });
     billCol.deleteOne(billDoc);
     billCol.insertOne(bill);
   }

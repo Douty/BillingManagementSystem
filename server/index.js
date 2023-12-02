@@ -22,6 +22,7 @@ app.use(express.json());
 const db = client.db("CompanyData");
 const userCol = db.collection("Customer");
 const billCol = db.collection("Bills");
+const recordCol = db.collection("BillingRecords");
 
 //Start of the registration process
 app.post("/api/registrationAttempt", async (req, res) => {
@@ -199,16 +200,27 @@ app.post("/api/PayBalance", async (req, res) => {
     const newDueDate = new Date(previousDueDate);
     newDueDate.setDate(newDueDate.getDate() + 31);
 
+    const dateOfPayment = await Customer.getSimulatedTime(customerStatus.id);
+
     const newBill = new Bill(
       new ObjectId(customerStatus.id),
       newDueDate,
       customerStatus.firstName,
       customerStatus.lastName
     );
-    Bill.Pay(customerStatus.id, newBill);
+
+    Bill.Pay(customerStatus.id, newBill, dateOfPayment);
   } catch (err) {
     console.log(err);
   }
+});
+
+app.get("/api/fetchData", async (req, res) => {
+  //const projection = {_id: 0, firstName: 1, lastName: 1, customerID: 1, wattUsage: 1, dueDate: 1 }
+
+  const activeBills = await billCol.find().limit(10).toArray();
+  const records = await recordCol.find().toArray();
+  res.json({ activeBills: activeBills, records: records });
 });
 
 //starts server
