@@ -216,10 +216,16 @@ app.post("/api/PayBalance", async (req, res) => {
 });
 
 app.get("/api/fetchData", async (req, res) => {
-  //const projection = {_id: 0, firstName: 1, lastName: 1, customerID: 1, wattUsage: 1, dueDate: 1 }
-
   const activeBills = await billCol.find().limit(10).toArray();
   const records = await recordCol.find().toArray();
+  res.json({ activeBills: activeBills, records: records });
+});
+app.post("/api/docSearch", async (req, res) => {
+  const query = req.body.query;
+  const field = req.body.field;
+
+  const activeBills = await billCol.find({ [field]: query }).toArray();
+  const records = await recordCol.find({ [field]: query }).toArray();
   res.json({ activeBills: activeBills, records: records });
 });
 
